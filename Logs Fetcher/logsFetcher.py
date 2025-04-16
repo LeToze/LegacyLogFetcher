@@ -36,7 +36,6 @@ def get_running_config(ip):
         child.expect("#")
         config_output = child.before.decode()
 
-        # Write to file
         filename = os.path.join(OUTPUT_DIR, f"{hostname}_running_config.txt")
         with open(filename, "w") as f:
             f.write(config_output)
@@ -49,7 +48,6 @@ def get_running_config(ip):
     except Exception as e:
         log(f"[X] ERROR with {ip}: {e}")
 
-# Read IPs from file and launch threads
 def main():
     with open("ips.txt", "r") as f:
         ips = [line.strip() for line in f if line.strip()]
@@ -63,7 +61,7 @@ def main():
     for t in threads:
         t.join()
 
-    log("✅ All configs collected.")
+    log("[<<] All configs collected. Finishing...")
 
 if __name__ == "__main__":
     main()
